@@ -1,5 +1,5 @@
 import { getPhotos } from './data.js';
-import { thumbnailClickHandler } from './thumbnail-modal.js';
+import { renderBigPicture } from './thumbnail-modal.js';
 
 const data = getPhotos();
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -15,9 +15,9 @@ const createThumbnail = (item) => {
   img.alt = item.description;
   comments.textContent = item.comments.length;
   likes.textContent = item.likes;
-  template.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    thumbnailClickHandler(item);
+  template.addEventListener('click', (event) => {
+    event.preventDefault();
+    renderBigPicture(item);
   });
 
   return template;
