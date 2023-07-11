@@ -1,4 +1,4 @@
-import { isEscapeKey, isNotMessageInput } from './util.js';
+import { isEscapeKey, isNotInput } from './util.js';
 
 const COMMENTS_PER_LOAD = 5;
 const bigPicture = document.querySelector('.big-picture');
@@ -67,7 +67,7 @@ function closeButtonClickHandler(event) {
 }
 
 function documentKeydownHandler(event) {
-  if (isEscapeKey(event) && isNotMessageInput(event)) {
+  if (isEscapeKey(event) && isNotInput(event)) {
     event.preventDefault();
     closeBigPicture();
   }
