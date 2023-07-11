@@ -1,4 +1,4 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey, isNotMessageInput } from './util.js';
 
 const COMMENTS_PER_LOAD = 5;
 const bigPicture = document.querySelector('.big-picture');
@@ -67,7 +67,7 @@ function closeButtonClickHandler(event) {
 }
 
 function documentKeydownHandler(event) {
-  if (isEscapeKey(event) && event.target.closest('.social__footer-text')) { // isNotMessageInput
+  if (isEscapeKey(event) && isNotMessageInput(event)) {
     event.preventDefault();
     closeBigPicture();
   }
@@ -91,11 +91,11 @@ const renderContent = (data) => {
   renderComments();
 };
 
-const thumbnailClickHandler = (data) => {
+const renderBigPicture = (data) => {
   comments = data.comments;
   openBigPicture();
   renderContent(data);
 };
-// Переименовать, это не функция-обработчик
-export { thumbnailClickHandler };
+
+export { renderBigPicture };
 
