@@ -1,70 +1,47 @@
-import { isEscapeKey, isNotInput } from './util.js';
+import { isEscapeKey } from './util.js';
+import { initScale, resetScale } from './scale.js';
+import { initSlider, resetSlider } from './slider.js';
+import { initValidation, resetValidation } from './validation.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
-const imageUploadInput = document.querySelector('.img-upload__input');
+const uploadInput = document.querySelector('.img-upload__input');
 const filtersContainer = document.querySelector('.img-upload__overlay');
 const closeButton = document.querySelector('.img-upload__cancel');
 const imagePreview = document.querySelector('.img-upload__preview img');
 const effectsPreviewImages = document.querySelectorAll('.effects__preview');
-const effects = document.querySelectorAll('.effects__radio');
-const imageHashtags = document.querySelector('.text__hashtags');
-const imageDescription = document.querySelector('.text__description');
-const pristine = new Pristine(uploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper'
-});
 
-const checkHashtags = (value) => {
-  const hashtagRegexp = /#[a-zA-Z0-9]{1,19}/;
-  const hashtags = value.split(' ');
-  return hashtags.every((element) => (element.match(hashtagRegexp)));
-};
-
-const addValidators = () => {
-  pristine.addValidator(imageDescription, (value) => (value.length < 140), 'Комментарий не может быть больше 140 символов');
-  pristine.addValidator(imageHashtags, checkHashtags, 'Один или несколько хэштегов неверные');
-};
-
-const setDefaultSettings = () => {
-  imageHashtags.value = '';
-  imageDescription.value = '';
-  imageUploadInput.value = '';
-  effects[0].checked = true;
-};
-
-const closeImageModal = () => {
-  setDefaultSettings();
+const closeUploadForm = () => {
+  resetScale();
+  resetSlider();
+  resetValidation();
+  uploadForm.reset();
   filtersContainer.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', documentKeydownHandler);
   closeButton.removeEventListener('click', closeButtonClickHandler);
-  uploadForm.removeEventListener('submit', uploadFormSubmitHandler);
 };
 
 function closeButtonClickHandler(event) {
   event.preventDefault();
-  closeImageModal();
+  closeUploadForm();
 }
 
 function documentKeydownHandler(event) {
-  if (isEscapeKey(event) && isNotInput(event)) {
+  if (isEscapeKey(event) && !event.target.closest('.text__hashtags') && !event.target.closest('.text__description')) {
     event.preventDefault();
-    closeImageModal();
+    closeUploadForm();
   }
 }
 
 function uploadFormSubmitHandler(event) {
   event.preventDefault();
-  addValidators();
-  pristine.validate();
 }
 
-const openImageModal = () => {
+const openUploadForm = () => {
   filtersContainer.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', documentKeydownHandler);
   closeButton.addEventListener('click', closeButtonClickHandler);
-  uploadForm.addEventListener('submit', uploadFormSubmitHandler);
 };
 
 const showImagePreview = (event) => {
@@ -73,13 +50,19 @@ const showImagePreview = (event) => {
   effectsPreviewImages.forEach((effect) => (effect.style.backgroundImage = `url(${fileUrl})`));
 };
 
-const imageUploadInputHandler = (event) => {
-  openImageModal();
-  showImagePreview(event);
+const uploadInputChangeHandler = (event) => {
+  if (event.target.files[0].type.match(/image/)) {
+    openUploadForm();
+    showImagePreview(event);
+  }
 };
 
-const uploadImage = () => {
-  imageUploadInput.addEventListener('change', imageUploadInputHandler);
+const initUploadForm = () => {
+  initScale();
+  initSlider();
+  initValidation();
+  uploadForm.addEventListener('submit', uploadFormSubmitHandler);
+  uploadInput.addEventListener('change', uploadInputChangeHandler);
 };
 
-export { uploadImage };
+export { initUploadForm };
