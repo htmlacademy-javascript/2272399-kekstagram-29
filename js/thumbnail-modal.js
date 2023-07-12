@@ -1,4 +1,4 @@
-import { isEscapeKey, isNotMessageInput } from './util.js';
+import { isEscapeKey } from './util.js';
 
 const COMMENTS_PER_LOAD = 5;
 const bigPicture = document.querySelector('.big-picture');
@@ -25,7 +25,6 @@ const createComment = (item) => {
 
   return comment;
 };
-// Добавить изменение показа надписи комментариев
 
 const setButtonState = () => {
   if (visibleCommentsCount >= comments.length) {
@@ -67,7 +66,7 @@ function closeButtonClickHandler(event) {
 }
 
 function documentKeydownHandler(event) {
-  if (isEscapeKey(event) && isNotMessageInput(event)) {
+  if (isEscapeKey(event) && !event.target.closest('.social__footer-text')) {
     event.preventDefault();
     closeBigPicture();
   }
