@@ -1,7 +1,4 @@
 const FILTERS = {
-  'none': {
-    name: 'none',
-  },
   'chrome': {
     name: 'grayscale',
     min: 0,
@@ -36,62 +33,80 @@ const FILTERS = {
     max: 3,
     step: 0.1,
     unit: '',
-  }
+  },
+  default: {
+    name: null,
+    min: 0,
+    max: 1,
+    step: 0.1,
+    unit: '',
+  },
 };
 
-const effectButtons = document.querySelector('.effects__list');
 const effectValue = document.querySelector('.effect-level__value');
 const imagePreview = document.querySelector('.img-upload__preview img');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const slider = document.querySelector('.effect-level__slider');
 
+
 const changeFilter = (name, value, unit) => {
+  if (!name) {
+    imagePreview.style.filter = null;
+  }
   imagePreview.style.filter = `${name}(${value}${unit})`;
   effectValue.value = value;
 };
 
-const createSlider = (filter) => {
-  sliderContainer.classList.remove('hidden');
+const updateSliderHandler = (name, unit) => {
+  slider.noUiSlider.on('update', () => {
+    const sliderValue = slider.noUiSlider.get();
+    changeFilter(name, sliderValue, unit);
+  });
+};
+
+const createSlider = ({name, min, max, step, unit}) => {
   noUiSlider.create(slider, {
     range: {
-      min: filter['min'],
-      max: filter['max']
+      min: min,
+      max: max
     },
-    start: filter['max'],
-    step: filter['step'],
+    start: max,
+    step: step,
     connect: 'lower',
   });
 
-  slider.noUiSlider.on('update', () => {
-    const sliderValue = slider.noUiSlider.get();
-    changeFilter(filter.name, sliderValue, filter.unit);
-  });
+  updateSliderHandler(name, unit);
 };
 
-const resetSlider = () => {
-  sliderContainer.classList.add('hidden');
-  imagePreview.style.filter = null;
-  effectValue.value = null;
-
-  if (slider.noUiSlider) {
-    slider.noUiSlider.destroy();
-  }
-};
-
-const effectButtonChangeHandler = (event) => {
-  resetSlider();
-  const filter = FILTERS[event.target.value];
-
-  if (filter.name === 'none') {
+const setContainerState = (value) => {
+  if (!value.name) {
+    sliderContainer.classList.add('hidden');
     return;
   }
+  sliderContainer.classList.remove('hidden');
+};
 
+const updateSlider = (filter) => {
+  filter = FILTERS[filter] || FILTERS.default;
+  const {name, min, max, step, unit} = filter;
+
+  setContainerState(filter);
+  slider.noUiSlider.updateOptions({
+    range: {
+      min: min,
+      max: max
+    },
+    start: max,
+    step: step,
+  });
+
+  updateSliderHandler(name, unit);
+};
+
+const initSlider = (filter) => {
+  filter = FILTERS[filter] || FILTERS.default;
+  setContainerState(filter);
   createSlider(filter);
 };
 
-const initSlider = () => {
-  resetSlider();
-  effectButtons.addEventListener('change', effectButtonChangeHandler);
-};
-
-export { initSlider, resetSlider };
+export { initSlider, updateSlider };
