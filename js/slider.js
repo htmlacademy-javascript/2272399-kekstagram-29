@@ -64,20 +64,6 @@ const updateSliderHandler = (name, unit) => {
   });
 };
 
-const createSlider = ({name, min, max, step, unit}) => {
-  noUiSlider.create(slider, {
-    range: {
-      min: min,
-      max: max
-    },
-    start: max,
-    step: step,
-    connect: 'lower',
-  });
-
-  updateSliderHandler(name, unit);
-};
-
 const setContainerState = (value) => {
   if (!value.name) {
     sliderContainer.classList.add('hidden');
@@ -105,8 +91,39 @@ const updateSlider = (filter) => {
 
 const initSlider = (filter) => {
   filter = FILTERS[filter] || FILTERS.default;
+  const {name, min, max, step, unit} = filter;
   setContainerState(filter);
-  createSlider(filter);
+
+  noUiSlider.create(slider, {
+    range: {
+      min: min,
+      max: max
+    },
+    start: max,
+    step: step,
+    connect: 'lower',
+  });
+
+  updateSliderHandler(name, unit);
 };
 
 export { initSlider, updateSlider };
+
+
+/*
+
+const setSliderState = (filter, init = false) => {
+  filter = FILTERS[filter] || FILTERS.default;
+  const {name, min, max, step, unit} = filter;
+  setContainerState(filter);
+
+  if (init) {
+    initSlider();
+  } else {
+    updateSlider();
+  }
+
+  updateSliderHandler(name, unit);
+};
+
+*/
