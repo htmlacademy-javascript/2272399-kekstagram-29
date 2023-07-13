@@ -9,8 +9,12 @@ const filtersContainer = document.querySelector('.img-upload__overlay');
 const closeButton = document.querySelector('.img-upload__cancel');
 const imagePreview = document.querySelector('.img-upload__preview img');
 const effectsPreviewImages = document.querySelectorAll('.effects__preview');
-const effectButtons = document.querySelector('.effects__list');
+const filterList = document.querySelector('.effects__list');
 const defaultFilter = document.querySelector('input[checked].effects__radio').value;
+
+const filterListChangeHandler = (event) => {
+  updateSlider(event.target.value);
+};
 
 const closeUploadForm = () => {
   resetScale();
@@ -21,6 +25,7 @@ const closeUploadForm = () => {
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', documentKeydownHandler);
   closeButton.removeEventListener('click', closeButtonClickHandler);
+  filterList.removeEventListener('change', filterListChangeHandler);
 };
 
 function closeButtonClickHandler(event) {
@@ -48,7 +53,7 @@ const openUploadForm = () => {
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', documentKeydownHandler);
   closeButton.addEventListener('click', closeButtonClickHandler);
-  effectButtons.addEventListener('change', (event) => (updateSlider(event.target.value)));
+  filterList.addEventListener('change', filterListChangeHandler);
 };
 
 const showImagePreview = (event) => {
