@@ -87,7 +87,6 @@ const updateSlider = (filter) => {
   });
 
   changeFilter(name, max, unit);
-  //updateSliderHandler(name, unit);
 };
 
 const initSlider = (filter) => {
