@@ -86,7 +86,8 @@ const updateSlider = (filter) => {
     step: step,
   });
 
-  updateSliderHandler(name, unit);
+  changeFilter(name, max, unit);
+  //updateSliderHandler(name, unit);
 };
 
 const initSlider = (filter) => {
@@ -108,22 +109,3 @@ const initSlider = (filter) => {
 };
 
 export { initSlider, updateSlider };
-
-
-/*
-
-const setSliderState = (filter, init = false) => {
-  filter = FILTERS[filter] || FILTERS.default;
-  const {name, min, max, step, unit} = filter;
-  setContainerState(filter);
-
-  if (init) {
-    initSlider();
-  } else {
-    updateSlider();
-  }
-
-  updateSliderHandler(name, unit);
-};
-
-*/
