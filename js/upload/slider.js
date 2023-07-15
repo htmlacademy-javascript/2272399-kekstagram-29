@@ -48,24 +48,21 @@ const imagePreview = document.querySelector('.img-upload__preview img');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const slider = document.querySelector('.effect-level__slider');
 
-
-const changeFilter = (name, value, unit) => {
-  if (!name) {
-    imagePreview.style.filter = null;
-  }
-  imagePreview.style.filter = `${name}(${value}${unit})`;
-  effectValue.value = value;
-};
-
 const updateSliderHandler = (name, unit) => {
+  if (slider.noUiSlider) {
+    slider.noUiSlider.off('update');
+  }
+
   slider.noUiSlider.on('update', () => {
-    const sliderValue = slider.noUiSlider.get();
-    changeFilter(name, sliderValue, unit);
+    const value = slider.noUiSlider.get();
+    imagePreview.style.filter = `${name}(${value}${unit})`;
+    effectValue.value = value;
   });
 };
 
 const setContainerState = (value) => {
   if (!value.name) {
+    imagePreview.style.filter = 'none';
     sliderContainer.classList.add('hidden');
     return;
   }
@@ -86,7 +83,7 @@ const updateSlider = (filter) => {
     step: step,
   });
 
-  changeFilter(name, max, unit);
+  updateSliderHandler(name, unit);
 };
 
 const initSlider = (filter) => {

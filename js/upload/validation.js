@@ -1,8 +1,9 @@
 const HASHTAG_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_COMMENT_LENGTH = 140;
+const MAX_HASHTAG_COUNT = 5;
 const COMMENT_LENGTH_INVALID = `Комментарий не может быть больше ${MAX_COMMENT_LENGTH} символов`;
-const HASHTAG_INVALID = 'Введен невалидный хэштег';
-const HASHTAG_COUNT_INVALID = 'Превышено количество хэштегов';
+const HASHTAG_INVALID = 'Введен неправильный хэштег. Попробуйте формат #ХэшТег, не превышая 20 символов';
+const HASHTAG_COUNT_INVALID = `Максимальное количество хэштегов: ${MAX_HASHTAG_COUNT}`;
 const HASHTAG_SIMILAR_INVALID = 'Хэштег повторяется';
 
 const uploadForm = document.querySelector('.img-upload__form');
@@ -13,19 +14,21 @@ const pristine = new Pristine(uploadForm, {
   errorTextParent: 'img-upload__field-wrapper'
 });
 
+const createHashtags = (value) => (value.trim().toLowerCase.split(' '));
+
 const checkHashtags = (value) => {
-  if (!value.length) {
+  if (!value) {
     return true;
   }
-  const hashtags = value.trim().split(' ');
+  const hashtags = createHashtags(value);
   const check = hashtags.every((element) => (element.match(HASHTAG_PATTERN)));
   return check;
 };
 
-const checkHashtagsCount = (value) => (value.split(' ').length <= 5);
+const checkHashtagsCount = (value) => (value.split(' ').length <= MAX_HASHTAG_COUNT);
 
 const checkSimilarHashtags = (value) => {
-  const hashtags = value.trim().toLowerCase().split(' ');
+  const hashtags = createHashtags(value);
   return hashtags.length === new Set(hashtags).size;
 };
 

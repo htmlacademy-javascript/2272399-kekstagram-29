@@ -1,4 +1,4 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey } from '../utils/util.js';
 import { initScale, resetScale } from './scale.js';
 import { initSlider, updateSlider } from './slider.js';
 import { pristineInit, pristineReset, pristineValidate} from './validation.js';
