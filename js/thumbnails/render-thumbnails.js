@@ -1,4 +1,4 @@
-import { getPhotos } from './data.js';
+import { getPhotos } from '../utils/data.js';
 import { renderBigPicture } from './thumbnail-modal.js';
 
 const data = getPhotos();

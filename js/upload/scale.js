@@ -17,14 +17,18 @@ const changeScale = (value) => {
 
 const scaleBiggerClickHandler = (event) => {
   event.preventDefault();
-  currentScale = Math.min(MAX_SCALE, SCALE_STEP + currentScale);
-  changeScale(currentScale);
+  if (currentScale < MAX_SCALE) {
+    currentScale += SCALE_STEP;
+    changeScale(currentScale);
+  }
 };
 
 const scaleSmallerClickHandler = (event) => {
   event.preventDefault();
-  currentScale = Math.max(MIN_SCALE, currentScale - SCALE_STEP);
-  changeScale(currentScale);
+  if (currentScale > MIN_SCALE) {
+    currentScale -= SCALE_STEP;
+    changeScale(currentScale);
+  }
 };
 
 const resetScale = () => {

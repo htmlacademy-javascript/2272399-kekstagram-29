@@ -1,6 +1,7 @@
-import { isEscapeKey } from './util.js';
+import { isEscapeKey } from '../utils/util.js';
 
 const COMMENTS_PER_LOAD = 5;
+
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = document.querySelector('.big-picture__cancel');
 const img = document.querySelector('.big-picture__img').querySelector('img');
