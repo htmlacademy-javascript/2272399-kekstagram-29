@@ -2,15 +2,19 @@ import { isEscapeKey } from '../utils/util.js';
 import { initScale, resetScale } from './scale.js';
 import { initSlider, updateSlider } from './slider.js';
 import { pristineInit, pristineReset, pristineValidate} from './validation.js';
+import { sendData } from '../utils/api.js';
+import { initErrorMessage, initSuccessMessage, showCurrentMessage } from './messages.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadInput = document.querySelector('.img-upload__input');
 const filtersContainer = document.querySelector('.img-upload__overlay');
 const closeButton = document.querySelector('.img-upload__cancel');
-const imagePreview = document.querySelector('.img-upload__preview img');
-const effectsPreviewImages = document.querySelectorAll('.effects__preview');
+//const imagePreview = document.querySelector('.img-upload__preview img');
+//const effectsPreviewImages = document.querySelectorAll('.effects__preview');
 const filterList = document.querySelector('.effects__list');
 const defaultFilter = document.querySelector('input[checked].effects__radio').value;
+const submitButton = document.querySelector('.img-upload__submit');
+const DATA_URL = 'https://29.javascript.pages.academy/kekstagram';
 
 const filterListChangeHandler = (event) => {
   updateSlider(event.target.value);
@@ -40,11 +44,22 @@ function documentKeydownHandler(event) {
   }
 }
 
-function uploadFormSubmitHandler(event) {
+const successUpload = () => {
+  showCurrentMessage('success');
+  closeUploadForm();
+};
+
+const errorUpload = () => {
+  showCurrentMessage('error');
+};
+
+async function uploadFormSubmitHandler(event) {
   event.preventDefault();
 
   if (pristineValidate()) {
-    closeUploadForm();
+    submitButton.disabled = true;
+    await sendData(DATA_URL, new FormData(event.target), successUpload, errorUpload);
+    submitButton.disabled = false;
   }
 }
 
@@ -56,16 +71,17 @@ const openUploadForm = () => {
   filterList.addEventListener('change', filterListChangeHandler);
 };
 
-const showImagePreview = (event) => {
-  const fileUrl = URL.createObjectURL(event.target.files[0]);
-  imagePreview.src = fileUrl;
-  effectsPreviewImages.forEach((effect) => (effect.style.backgroundImage = `url(${fileUrl})`));
-};
+
+// const showImagePreview = (event) => {
+//   const fileUrl = URL.createObjectURL(event.target.files[0]);
+//   imagePreview.src = fileUrl;
+//   effectsPreviewImages.forEach((effect) => (effect.style.backgroundImage = `url(${fileUrl})`));
+// };
 
 const uploadInputChangeHandler = (event) => {
   if (event.target.files[0].type.match(/image/)) {
     openUploadForm();
-    showImagePreview(event);
+    //showImagePreview(event);
   }
 };
 
@@ -73,6 +89,8 @@ const initUploadForm = () => {
   initScale();
   pristineInit();
   initSlider(defaultFilter);
+  initErrorMessage();
+  initSuccessMessage();
   uploadForm.addEventListener('submit', uploadFormSubmitHandler);
   uploadInput.addEventListener('change', uploadInputChangeHandler);
 };

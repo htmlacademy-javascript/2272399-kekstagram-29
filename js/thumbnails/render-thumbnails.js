@@ -1,7 +1,5 @@
-import { getPhotos } from '../utils/data.js';
 import { renderBigPicture } from './thumbnail-modal.js';
 
-const data = getPhotos();
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const picturesContainer = document.querySelector('.pictures');
 
@@ -23,7 +21,7 @@ const createThumbnail = (item) => {
   return template;
 };
 
-const renderThumbnails = () => {
+const renderThumbnails = (data) => {
   data.forEach((item) => picturesContainer.append(createThumbnail(item)));
 };
 

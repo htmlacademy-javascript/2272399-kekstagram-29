@@ -14,7 +14,7 @@ const pristine = new Pristine(uploadForm, {
   errorTextParent: 'img-upload__field-wrapper'
 });
 
-const createHashtags = (value) => (value.trim().toLowerCase.split(' '));
+const createHashtags = (value) => value.trim().toLowerCase().split(' ');
 
 const checkHashtags = (value) => {
   if (!value) {
@@ -34,9 +34,7 @@ const checkSimilarHashtags = (value) => {
 
 const checkCommentLength = (value) => (value.length <= MAX_COMMENT_LENGTH);
 
-const pristineValidate = () => {
-  pristine.validate();
-};
+const pristineValidate = () => (pristine.validate());
 
 const pristineReset = () => {
   pristine.reset();
