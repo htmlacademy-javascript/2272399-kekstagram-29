@@ -1,6 +1,6 @@
 import { isEscapeKey } from '../utils/util.js';
 
-const MESSAGE_STATES = {
+const messageStates = {
   success: 'success',
   error: 'error',
 };
@@ -28,8 +28,8 @@ function currentButtonClickHandler(event) {
 }
 
 const setCurrentMessageState = (state) => {
-  currentMessage = document.querySelector(`.${MESSAGE_STATES[state]}`);
-  currentButton = document.querySelector(`.${MESSAGE_STATES[state]}__button`);
+  currentMessage = document.querySelector(`.${messageStates[state]}`);
+  currentButton = document.querySelector(`.${messageStates[state]}__button`);
 };
 
 const showCurrentMessage = (value) => {
