@@ -1,16 +1,14 @@
-const ERROR_GET_DATA = 'Ошибка загрузки данных. Попробуйте перезагрузить страницу';
-
 const getData = (url, onSuccess, onError) => {
   fetch(url)
     .then((response) => {
       if (response.ok) {
         return response.json();
       }
-      throw new Error(ERROR_GET_DATA);
+      throw new Error();
     })
     .then((data) => onSuccess(data))
-    .catch((error) => {
-      onError(error);
+    .catch(() => {
+      onError();
     });
 };
 

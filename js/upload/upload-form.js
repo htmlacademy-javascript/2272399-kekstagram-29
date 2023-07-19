@@ -3,8 +3,11 @@ import { initScale, resetScale } from './scale.js';
 import { initSlider, updateSlider } from './slider.js';
 import { pristineInit, pristineReset, pristineValidate} from './validation.js';
 import { sendData } from '../utils/api.js';
-import { initErrorMessage, initSuccessMessage, showCurrentMessage } from './messages.js';
+import { showMessage } from '../utils/messages.js';
 
+const DATA_URL = 'https://29.javascript.pages.academy/kekstag1ram';
+const SUCCESS_MESSAGE = 'Изображение успешно загружено';
+const ERROR_MESSAGE = 'Ошибка загрузки файла';
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadInput = document.querySelector('.img-upload__input');
 const filtersContainer = document.querySelector('.img-upload__overlay');
@@ -14,7 +17,7 @@ const closeButton = document.querySelector('.img-upload__cancel');
 const filterList = document.querySelector('.effects__list');
 const defaultFilter = document.querySelector('input[checked].effects__radio').value;
 const submitButton = document.querySelector('.img-upload__submit');
-const DATA_URL = 'https://29.javascript.pages.academy/kekstagram';
+
 
 const filterListChangeHandler = (event) => {
   updateSlider(event.target.value);
@@ -38,19 +41,19 @@ function closeButtonClickHandler(event) {
 }
 
 function documentKeydownHandler(event) {
-  if (isEscapeKey(event) && !event.target.closest('.text__hashtags') && !event.target.closest('.text__description')) {
+  if (isEscapeKey(event) && !event.target.closest('.text__hashtags') && !event.target.closest('.text__description') && !document.querySelector('.error')) {
     event.preventDefault();
     closeUploadForm();
   }
 }
 
 const successUpload = () => {
-  showCurrentMessage('success');
+  showMessage('success', SUCCESS_MESSAGE, false);
   closeUploadForm();
 };
 
 const errorUpload = () => {
-  showCurrentMessage('error');
+  showMessage('error', ERROR_MESSAGE, true);
 };
 
 async function uploadFormSubmitHandler(event) {
@@ -89,8 +92,6 @@ const initUploadForm = () => {
   initScale();
   pristineInit();
   initSlider(defaultFilter);
-  initErrorMessage();
-  initSuccessMessage();
   uploadForm.addEventListener('submit', uploadFormSubmitHandler);
   uploadInput.addEventListener('change', uploadInputChangeHandler);
 };

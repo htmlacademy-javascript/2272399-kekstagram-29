@@ -48,7 +48,7 @@ const imagePreview = document.querySelector('.img-upload__preview img');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const slider = document.querySelector('.effect-level__slider');
 
-const updateSliderHandler = (name, unit) => {
+const setSliderEvent = (name, unit) => {
   if (slider.noUiSlider) {
     slider.noUiSlider.off('update');
   }
@@ -83,7 +83,7 @@ const updateSlider = (filter) => {
     step: step,
   });
 
-  updateSliderHandler(name, unit);
+  setSliderEvent(name, unit);
 };
 
 const initSlider = (filter) => {
@@ -101,7 +101,7 @@ const initSlider = (filter) => {
     connect: 'lower',
   });
 
-  updateSliderHandler(name, unit);
+  setSliderEvent(name, unit);
 };
 
 export { initSlider, updateSlider };
