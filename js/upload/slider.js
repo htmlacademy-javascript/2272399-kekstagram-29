@@ -1,4 +1,4 @@
-const filters = {
+const FILTERS = {
   'chrome': {
     name: 'grayscale',
     min: 0,
@@ -70,7 +70,7 @@ const setContainerState = (value) => {
 };
 
 const updateSlider = (filter) => {
-  filter = filters[filter] || filters.default;
+  filter = FILTERS[filter] || FILTERS.default;
   const {name, min, max, step, unit} = filter;
 
   setContainerState(filter);
@@ -87,7 +87,7 @@ const updateSlider = (filter) => {
 };
 
 const initSlider = (filter) => {
-  filter = filters[filter] || filters.default;
+  filter = FILTERS[filter] || FILTERS.default;
   const {name, min, max, step, unit} = filter;
   setContainerState(filter);
 
