@@ -4,7 +4,7 @@ import { showMessage } from '../utils/messages.js';
 import { initFilter } from './filter.js';
 
 const DATA_URL = 'https://29.javascript.pages.academy/kekstagram/data';
-const ERROR_GET_DATA = 'Ошибка загрузки данных. Попробуйте перезагрузить страницу';
+const ERROR_MESSAGE = 'Ошибка загрузки данных';
 
 const onGetSuccess = (data) => {
   initFilter(data);
@@ -12,7 +12,7 @@ const onGetSuccess = (data) => {
 };
 
 const onGetError = () => {
-  showMessage('error', ERROR_GET_DATA, false);
+  showMessage('error', ERROR_MESSAGE);
 };
 
 const initThumbnails = () => {

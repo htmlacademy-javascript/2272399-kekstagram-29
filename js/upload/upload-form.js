@@ -5,9 +5,10 @@ import { pristineInit, pristineReset, pristineValidate} from './validation.js';
 import { sendData } from '../utils/api.js';
 import { showMessage } from '../utils/messages.js';
 
-const DATA_URL = 'https://29.javascript.pages.academy/kekstag1ram';
+const DATA_URL = 'https://29.javascript.pages.academy/kekstagram';
 const SUCCESS_MESSAGE = 'Изображение успешно загружено';
 const ERROR_MESSAGE = 'Ошибка загрузки файла';
+const ERROR_BUTTON_TEXT = 'Попробовать еще раз';
 const EXTENSION_REGEXP = /.(jpg|png|jpeg)$/;
 
 const uploadForm = document.querySelector('.img-upload__form');
@@ -43,19 +44,19 @@ function closeButtonClickHandler(event) {
 }
 
 function documentKeydownHandler(event) {
-  if (isEscapeKey(event) && !event.target.closest('.text__hashtags') && !event.target.closest('.text__description') && !document.querySelector('.error')) {
+  if (isEscapeKey(event) && !event.target.closest('.text__hashtags') && !event.target.closest('.text__description')) {
     event.preventDefault();
     closeUploadForm();
   }
 }
 
 const successUpload = () => {
-  showMessage('success', SUCCESS_MESSAGE, false);
   closeUploadForm();
+  showMessage('success', SUCCESS_MESSAGE);
 };
 
 const errorUpload = () => {
-  showMessage('error', ERROR_MESSAGE, true);
+  showMessage('error', ERROR_MESSAGE, ERROR_BUTTON_TEXT);
 };
 
 async function uploadFormSubmitHandler(event) {
@@ -75,7 +76,6 @@ const openUploadForm = () => {
   closeButton.addEventListener('click', closeButtonClickHandler);
   filterList.addEventListener('change', filterListChangeHandler);
 };
-
 
 const showImagePreview = (event) => {
   const fileUrl = URL.createObjectURL(event.target.files[0]);
