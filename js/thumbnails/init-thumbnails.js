@@ -1,18 +1,18 @@
 import { renderThumbnails } from './render-thumbnails.js';
 import { getData } from '../utils/api.js';
 import { showMessage } from '../utils/messages.js';
-import { initFilter, getFilteringData } from './filter.js';
+import { initFilter } from './filter.js';
 
 const DATA_URL = 'https://29.javascript.pages.academy/kekstagram/data';
-const ERROR_GET_DATA = 'Ошибка загрузки данных. Попробуйте перезагрузить страницу';
+const ERROR_MESSAGE = 'Ошибка загрузки данных';
 
 const onGetSuccess = (data) => {
-  initFilter();
-  renderThumbnails(getFilteringData(data));
+  initFilter(data);
+  renderThumbnails(data);
 };
 
 const onGetError = () => {
-  showMessage('error', ERROR_GET_DATA, false);
+  showMessage('error', ERROR_MESSAGE);
 };
 
 const initThumbnails = () => {

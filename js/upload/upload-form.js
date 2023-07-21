@@ -5,15 +5,18 @@ import { pristineInit, pristineReset, pristineValidate} from './validation.js';
 import { sendData } from '../utils/api.js';
 import { showMessage } from '../utils/messages.js';
 
-const DATA_URL = 'https://29.javascript.pages.academy/kekstag1ram';
+const DATA_URL = 'https://29.javascript.pages.academy/kekstagram';
 const SUCCESS_MESSAGE = 'Изображение успешно загружено';
 const ERROR_MESSAGE = 'Ошибка загрузки файла';
+const ERROR_BUTTON_TEXT = 'Попробовать еще раз';
+const EXTENSION_REGEXP = /.(jpg|png|jpeg)$/;
+
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadInput = document.querySelector('.img-upload__input');
 const filtersContainer = document.querySelector('.img-upload__overlay');
 const closeButton = document.querySelector('.img-upload__cancel');
-//const imagePreview = document.querySelector('.img-upload__preview img');
-//const effectsPreviewImages = document.querySelectorAll('.effects__preview');
+const imagePreview = document.querySelector('.img-upload__preview img');
+const effectsPreviewImages = document.querySelectorAll('.effects__preview');
 const filterList = document.querySelector('.effects__list');
 const defaultFilter = document.querySelector('input[checked].effects__radio').value;
 const submitButton = document.querySelector('.img-upload__submit');
@@ -41,19 +44,19 @@ function closeButtonClickHandler(event) {
 }
 
 function documentKeydownHandler(event) {
-  if (isEscapeKey(event) && !event.target.closest('.text__hashtags') && !event.target.closest('.text__description') && !document.querySelector('.error')) {
+  if (isEscapeKey(event) && !event.target.closest('.text__hashtags') && !event.target.closest('.text__description')) {
     event.preventDefault();
     closeUploadForm();
   }
 }
 
 const successUpload = () => {
-  showMessage('success', SUCCESS_MESSAGE, false);
   closeUploadForm();
+  showMessage('success', SUCCESS_MESSAGE);
 };
 
 const errorUpload = () => {
-  showMessage('error', ERROR_MESSAGE, true);
+  showMessage('error', ERROR_MESSAGE, ERROR_BUTTON_TEXT);
 };
 
 async function uploadFormSubmitHandler(event) {
@@ -74,17 +77,16 @@ const openUploadForm = () => {
   filterList.addEventListener('change', filterListChangeHandler);
 };
 
-
-// const showImagePreview = (event) => {
-//   const fileUrl = URL.createObjectURL(event.target.files[0]);
-//   imagePreview.src = fileUrl;
-//   effectsPreviewImages.forEach((effect) => (effect.style.backgroundImage = `url(${fileUrl})`));
-// };
+const showImagePreview = (event) => {
+  const fileUrl = URL.createObjectURL(event.target.files[0]);
+  imagePreview.src = fileUrl;
+  effectsPreviewImages.forEach((effect) => (effect.style.backgroundImage = `url(${fileUrl})`));
+};
 
 const uploadInputChangeHandler = (event) => {
-  if (event.target.files[0].type.match(/image/)) {
+  if (event.target.value.match(EXTENSION_REGEXP)) {
     openUploadForm();
-    //showImagePreview(event);
+    showImagePreview(event);
   }
 };
 
