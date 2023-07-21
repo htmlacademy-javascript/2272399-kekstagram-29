@@ -1,4 +1,4 @@
-const HASHTAG_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
+const HASHTAG_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAG_COUNT = 5;
 const COMMENT_LENGTH_INVALID = `Комментарий не может быть больше ${MAX_COMMENT_LENGTH} символов`;
@@ -21,7 +21,7 @@ const checkHashtags = (value) => {
     return true;
   }
   const hashtags = createHashtags(value);
-  const check = hashtags.every((element) => (element.match(HASHTAG_PATTERN)));
+  const check = hashtags.every((element) => (element.match(HASHTAG_REGEXP)));
   return check;
 };
 
