@@ -19,6 +19,7 @@ const createElement = (template) => {
 };
 
 const closeMessage = () => {
+  document.removeEventListener('keydown', documentKeydownHandler, {capture: true});
   message.remove();
 
   if (!isOpen) {
@@ -45,7 +46,7 @@ const showMessage = (type, text, buttonText) => {
       closeMessage();
     }
   });
-  document.addEventListener('keydown', documentKeydownHandler, {capture: true, once: true});
+  document.addEventListener('keydown', documentKeydownHandler, {capture: true});
 
   if (buttonText) {
     const messageButton = message.querySelector(`.${type}__button`);

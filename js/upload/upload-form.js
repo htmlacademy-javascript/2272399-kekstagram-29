@@ -5,7 +5,7 @@ import { pristineInit, pristineReset, pristineValidate} from './validation.js';
 import { sendData } from '../utils/api.js';
 import { showMessage } from '../utils/messages.js';
 
-const DATA_URL = 'https://29.javascript.pages.academy/kekstagram';
+const DATA_URL = 'https://29.javascript.pages.academy/kekstagr1am';
 const SUCCESS_MESSAGE = 'Изображение успешно загружено';
 const ERROR_MESSAGE = 'Ошибка загрузки файла';
 const ERROR_BUTTON_TEXT = 'Попробовать еще раз';
