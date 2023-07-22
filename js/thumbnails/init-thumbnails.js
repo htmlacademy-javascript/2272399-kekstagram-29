@@ -1,4 +1,3 @@
-import { renderThumbnails } from './render-thumbnails.js';
 import { getData } from '../utils/api.js';
 import { showMessage } from '../utils/messages.js';
 import { initFilter, renderFilteringPictures } from './filter.js';
@@ -8,7 +7,7 @@ const ERROR_MESSAGE = 'Ошибка загрузки данных';
 
 const onGetSuccess = (data) => {
   initFilter(data);
-  renderThumbnails(renderFilteringPictures(document.querySelector('.img-filters__button--active').id, data));
+  renderFilteringPictures(document.querySelector('.img-filters__button--active').id, data);
 };
 
 const onGetError = () => {
