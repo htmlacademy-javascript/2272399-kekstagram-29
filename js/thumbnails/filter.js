@@ -54,4 +54,4 @@ const initFilter = (data) => {
   });
 };
 
-export { initFilter };
+export { initFilter, renderFilteringPictures };

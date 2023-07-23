@@ -6,7 +6,9 @@ const getData = (url, onSuccess, onError) => {
       }
       throw new Error();
     })
-    .then((data) => onSuccess(data))
+    .then((data) => {
+      onSuccess(data);
+    })
     .catch(() => {
       onError();
     });

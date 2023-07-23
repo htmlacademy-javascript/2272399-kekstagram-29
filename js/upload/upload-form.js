@@ -6,10 +6,14 @@ import { sendData } from '../utils/api.js';
 import { showMessage } from '../utils/messages.js';
 
 const DATA_URL = 'https://29.javascript.pages.academy/kekstagram';
+const SUCCESS_CLASS = 'success';
+const ERROR_CLASS = 'error';
 const SUCCESS_MESSAGE = 'Изображение успешно загружено';
-const ERROR_MESSAGE = 'Ошибка загрузки файла';
-const ERROR_BUTTON_TEXT = 'Попробовать еще раз';
-const EXTENSION_REGEXP = /.(jpg|png|jpeg)$/;
+const SUCCESS_BUTTON_TEXT = 'Круто!';
+const ERROR_UPLOAD_MESSAGE = 'Ошибка загрузки файла';
+const ERROR_UPLOAD_BUTTON_TEXT = 'Попробовать еще раз';
+const ERROR_FILE_MESSAGE = 'Расширение выбранного файла недопустимо';
+const EXTENSION_REGEXP = /.(jpg|png|jpeg|gif|webp)$/;
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadInput = document.querySelector('.img-upload__input');
@@ -52,11 +56,11 @@ function documentKeydownHandler(event) {
 
 const successUpload = () => {
   closeUploadForm();
-  showMessage('success', SUCCESS_MESSAGE);
+  showMessage(SUCCESS_CLASS, SUCCESS_MESSAGE, SUCCESS_BUTTON_TEXT);
 };
 
 const errorUpload = () => {
-  showMessage('error', ERROR_MESSAGE, ERROR_BUTTON_TEXT);
+  showMessage(ERROR_CLASS, ERROR_UPLOAD_MESSAGE, ERROR_UPLOAD_BUTTON_TEXT);
 };
 
 async function uploadFormSubmitHandler(event) {
@@ -87,7 +91,9 @@ const uploadInputChangeHandler = (event) => {
   if (event.target.value.match(EXTENSION_REGEXP)) {
     openUploadForm();
     showImagePreview(event);
+    return;
   }
+  showMessage(ERROR_CLASS, ERROR_FILE_MESSAGE);
 };
 
 const initUploadForm = () => {
