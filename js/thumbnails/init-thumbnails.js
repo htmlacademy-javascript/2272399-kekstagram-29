@@ -4,18 +4,19 @@ import { initFilter, renderFilteringPictures } from './filter.js';
 
 const DATA_URL = 'https://29.javascript.pages.academy/kekstagram/data';
 const ERROR_MESSAGE = 'Ошибка загрузки данных';
+const ERROR_CLASS = 'error';
 
-const onGetSuccess = (data) => {
+const getSuccess = (data) => {
   initFilter(data);
   renderFilteringPictures(document.querySelector('.img-filters__button--active').id, data);
 };
 
-const onGetError = () => {
-  showMessage('error', ERROR_MESSAGE);
+const getError = () => {
+  showMessage(ERROR_CLASS, ERROR_MESSAGE);
 };
 
 const initThumbnails = () => {
-  getData(DATA_URL, onGetSuccess, onGetError);
+  getData(DATA_URL, getSuccess, getError);
 };
 
 export { initThumbnails };
