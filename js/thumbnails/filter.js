@@ -1,5 +1,5 @@
 import { renderThumbnails } from './render-thumbnails.js';
-import { getRandomNumber, debounce } from '../utils/util.js';
+import { debounce } from '../utils/util.js';
 
 const RANDOM_PICTURES_COUNT = 10;
 const DELAY = 500;
@@ -17,7 +17,7 @@ const filterByCommentsCount = (data) => (data.slice().sort((a, b) => b.comments.
 const filterInRandomOrder = (data) => {
   const dataClone = data.slice();
   for (let i = dataClone.length - 1; i > 0; i--) {
-    const j = getRandomNumber(0, dataClone.length);
+    const j = Math.floor(Math.random() * (i + 1));
     [dataClone[i], dataClone[j]] = [dataClone[j], dataClone[i]];
   }
 
