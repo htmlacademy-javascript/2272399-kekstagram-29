@@ -5,8 +5,9 @@ import { pristineInit, pristineReset, pristineValidate} from './validation.js';
 import { sendData } from '../utils/api.js';
 import { showMessage } from '../utils/messages.js';
 
-const DATA_URL = 'https://29.javascript.pages.academy/kekstagr1am';
+const DATA_URL = 'https://29.javascript.pages.academy/kekstagram';
 const SUCCESS_MESSAGE = 'Изображение успешно загружено';
+const SUCCESS_BUTTON_TEXT = 'Круто!';
 const ERROR_MESSAGE = 'Ошибка загрузки файла';
 const ERROR_BUTTON_TEXT = 'Попробовать еще раз';
 const EXTENSION_REGEXP = /.(jpg|png|jpeg)$/;
@@ -52,7 +53,7 @@ function documentKeydownHandler(event) {
 
 const successUpload = () => {
   closeUploadForm();
-  showMessage('success', SUCCESS_MESSAGE);
+  showMessage('success', SUCCESS_MESSAGE, SUCCESS_BUTTON_TEXT);
 };
 
 const errorUpload = () => {
