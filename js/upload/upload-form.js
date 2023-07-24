@@ -13,7 +13,7 @@ const SUCCESS_BUTTON_TEXT = 'Круто!';
 const ERROR_UPLOAD_MESSAGE = 'Ошибка загрузки файла';
 const ERROR_UPLOAD_BUTTON_TEXT = 'Попробовать еще раз';
 const ERROR_FILE_MESSAGE = 'Расширение выбранного файла недопустимо';
-const EXTENSION_REGEXP = /.(jpg|png|jpeg|gif|webp)$/;
+const EXTENSION_REGEXP = /\.(jpg|png|jpeg|gif|webp)$/i;
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadInput = document.querySelector('.img-upload__input');
