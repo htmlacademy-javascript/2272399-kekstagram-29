@@ -21,8 +21,6 @@ const createThumbnail = (item) => {
   return template;
 };
 
-const renderThumbnails = (data) => {
-  data.forEach((item) => picturesContainer.append(createThumbnail(item)));
-};
+const renderThumbnails = (data) => data.forEach((item) => picturesContainer.append(createThumbnail(item)));
 
 export { renderThumbnails };

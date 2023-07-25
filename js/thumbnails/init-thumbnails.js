@@ -11,12 +11,8 @@ const getSuccess = (data) => {
   renderFilteringPictures(document.querySelector('.img-filters__button--active').id, data);
 };
 
-const getError = () => {
-  showMessage(ERROR_CLASS, ERROR_MESSAGE);
-};
+const getError = () => showMessage(ERROR_CLASS, ERROR_MESSAGE);
 
-const initThumbnails = () => {
-  getData(DATA_URL, getSuccess, getError);
-};
+const initThumbnails = () => getData(DATA_URL, getSuccess, getError);
 
 export { initThumbnails };

@@ -1,7 +1,7 @@
 import { isEscapeKey } from '../utils/util.js';
 import { initScale, resetScale } from './scale.js';
 import { initSlider, updateSlider } from './slider.js';
-import { pristineInit, pristineReset, pristineValidate} from './validation.js';
+import { initPristine, pristineReset, pristineValidate} from './validation.js';
 import { sendData } from '../utils/api.js';
 import { showMessage } from '../utils/messages.js';
 
@@ -11,7 +11,7 @@ const ERROR_CLASS = 'error';
 const SUCCESS_MESSAGE = 'Изображение успешно загружено';
 const SUCCESS_BUTTON_TEXT = 'Круто!';
 const ERROR_UPLOAD_MESSAGE = 'Ошибка загрузки файла';
-const ERROR_UPLOAD_BUTTON_TEXT = 'Попробовать еще раз';
+const ERROR_UPLOAD_BUTTON_TEXT = 'Попробовать ещё раз';
 const ERROR_FILE_MESSAGE = 'Расширение выбранного файла недопустимо';
 const EXTENSION_REGEXP = /\.(jpg|png|jpeg|gif|webp)$/i;
 
@@ -26,9 +26,7 @@ const defaultFilter = document.querySelector('input[checked].effects__radio').va
 const submitButton = document.querySelector('.img-upload__submit');
 
 
-const filterListChangeHandler = (event) => {
-  updateSlider(event.target.value);
-};
+const filterListChangeHandler = (event) => updateSlider(event.target.value);
 
 const closeUploadForm = () => {
   resetScale();
@@ -59,9 +57,7 @@ const successUpload = () => {
   showMessage(SUCCESS_CLASS, SUCCESS_MESSAGE, SUCCESS_BUTTON_TEXT);
 };
 
-const errorUpload = () => {
-  showMessage(ERROR_CLASS, ERROR_UPLOAD_MESSAGE, ERROR_UPLOAD_BUTTON_TEXT);
-};
+const errorUpload = () => showMessage(ERROR_CLASS, ERROR_UPLOAD_MESSAGE, ERROR_UPLOAD_BUTTON_TEXT);
 
 async function uploadFormSubmitHandler(event) {
   event.preventDefault();
@@ -98,7 +94,7 @@ const uploadInputChangeHandler = (event) => {
 
 const initUploadForm = () => {
   initScale();
-  pristineInit();
+  initPristine();
   initSlider(defaultFilter);
   uploadForm.addEventListener('submit', uploadFormSubmitHandler);
   uploadInput.addEventListener('change', uploadInputChangeHandler);
