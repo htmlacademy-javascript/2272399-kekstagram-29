@@ -21,30 +21,27 @@ const checkHashtags = (value) => {
     return true;
   }
   const hashtags = createHashtags(value);
-  const check = hashtags.every((element) => (element.match(HASHTAG_REGEXP)));
-  return check;
+  return hashtags.every((element) => (element.match(HASHTAG_REGEXP)));
 };
 
-const checkHashtagsCount = (value) => (value.split(' ').length <= MAX_HASHTAG_COUNT);
+const checkHashtagsCount = (value) => value.split(' ').length <= MAX_HASHTAG_COUNT;
 
 const checkSimilarHashtags = (value) => {
   const hashtags = createHashtags(value);
   return hashtags.length === new Set(hashtags).size;
 };
 
-const checkCommentLength = (value) => (value.length <= MAX_COMMENT_LENGTH);
+const checkCommentLength = (value) => value.length <= MAX_COMMENT_LENGTH;
 
-const pristineValidate = () => (pristine.validate());
+const pristineValidate = () => pristine.validate();
 
-const pristineReset = () => {
-  pristine.reset();
-};
+const pristineReset = () => pristine.reset();
 
-const pristineInit = () => {
+const initPristine = () => {
   pristine.addValidator(imageDescription, checkCommentLength, COMMENT_LENGTH_INVALID, 1, true);
   pristine.addValidator(imageHashtags, checkHashtags, HASHTAG_INVALID, 1, true);
   pristine.addValidator(imageHashtags, checkHashtagsCount, HASHTAG_COUNT_INVALID, 1, true);
   pristine.addValidator(imageHashtags, checkSimilarHashtags, HASHTAG_SIMILAR_INVALID, 1, true);
 };
 
-export { pristineInit, pristineReset, pristineValidate };
+export { initPristine, pristineReset, pristineValidate };

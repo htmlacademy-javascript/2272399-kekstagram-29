@@ -4,7 +4,7 @@ const COMMENTS_PER_LOAD = 5;
 
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = document.querySelector('.big-picture__cancel');
-const img = document.querySelector('.big-picture__img').querySelector('img');
+const img = document.querySelector('.big-picture__img img');
 const imgCaption = document.querySelector('.social__caption');
 const likesCount = document.querySelector('.likes-count');
 const commentsCount = document.querySelector('.social__comment-count');
@@ -35,9 +35,7 @@ const setButtonState = () => {
   commentsLoadButton.classList.remove('hidden');
 };
 
-const updateCommentsCount = () => {
-  commentsCount.innerHTML = `${visibleCommentsCount} из ${comments.length} комментариев`;
-};
+const updateCommentsCount = () => (commentsCount.innerHTML = `${visibleCommentsCount} из ${comments.length} комментариев`);
 
 const renderComments = () => {
   const nextComments = comments.slice(visibleCommentsCount, visibleCommentsCount + COMMENTS_PER_LOAD);

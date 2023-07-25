@@ -1,33 +1,33 @@
 const FILTERS = {
-  'chrome': {
+  chrome: {
     name: 'grayscale',
     min: 0,
     max: 1,
     step: 0.1,
     unit: '',
   },
-  'sepia': {
+  sepia: {
     name: 'sepia',
     min: 0,
     max: 1,
     step: 0.1,
     unit: '',
   },
-  'marvin': {
+  marvin: {
     name: 'invert',
     min: 0,
     max: 100,
     step: 1,
     unit: '%',
   },
-  'phobos': {
+  phobos: {
     name: 'blur',
     min: 0,
     max: 3,
     step: 0.1,
     unit: 'px',
   },
-  'heat': {
+  heat: {
     name: 'brightness',
     min: 1,
     max: 3,
@@ -73,34 +73,34 @@ const updateSlider = (filter) => {
   filter = FILTERS[filter] || FILTERS.default;
   const {name, min, max, step, unit} = filter;
 
-  setContainerState(filter);
   slider.noUiSlider.updateOptions({
     range: {
-      min: min,
-      max: max
+      min,
+      max
     },
     start: max,
-    step: step,
+    step,
   });
 
+  setContainerState(filter);
   setSliderEvent(name, unit);
 };
 
 const initSlider = (filter) => {
   filter = FILTERS[filter] || FILTERS.default;
   const {name, min, max, step, unit} = filter;
-  setContainerState(filter);
 
   noUiSlider.create(slider, {
     range: {
-      min: min,
-      max: max
+      min,
+      max,
     },
     start: max,
-    step: step,
+    step,
     connect: 'lower',
   });
 
+  setContainerState(filter);
   setSliderEvent(name, unit);
 };
 
