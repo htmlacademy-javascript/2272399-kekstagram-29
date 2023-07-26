@@ -1,4 +1,5 @@
 const HASHTAG_REGEXP = /^#[a-zа-яё0-9]{1,19}$/i;
+const HASHTAG_SPLIT_REGEXP = /\s+/;
 const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAG_COUNT = 5;
 const COMMENT_LENGTH_INVALID = `Комментарий не может быть больше ${MAX_COMMENT_LENGTH} символов`;
@@ -14,7 +15,7 @@ const pristine = new Pristine(uploadForm, {
   errorTextParent: 'img-upload__field-wrapper'
 });
 
-const createHashtags = (value) => value.trim().toLowerCase().split(' ');
+const createHashtags = (value) => value.trim().toLowerCase().split(HASHTAG_SPLIT_REGEXP);
 
 const checkHashtags = (value) => {
   if (!value) {
@@ -24,7 +25,7 @@ const checkHashtags = (value) => {
   return hashtags.every((element) => (element.match(HASHTAG_REGEXP)));
 };
 
-const checkHashtagsCount = (value) => value.split(' ').length <= MAX_HASHTAG_COUNT;
+const checkHashtagsCount = (value) => createHashtags(value).length <= MAX_HASHTAG_COUNT;
 
 const checkSimilarHashtags = (value) => {
   const hashtags = createHashtags(value);
